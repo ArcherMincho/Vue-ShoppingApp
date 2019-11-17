@@ -1,32 +1,45 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+  <div id="App">
+    <router-view></router-view>
+
+    <div>{{$store.state.counter}}</div>
+    <button @click="add">+</button>
+    <button @click="dec">-</button>
+
+    <TabBar :icon_path="icon_path"
+    :icon_class="icon_class"
+    :icon_color="icon_color"></TabBar>
   </div>
 </template>
 
+<script>
+  import TabBar from "./components/tabbar/TabBar";
+
+  export default {
+    name: 'App',
+    components:{
+      TabBar
+    },
+    data() {
+        return {
+          icon_path: ['/home', '/cart', '/user', '/more'],
+          icon_class: ['icon-menu','icon-shopping-cart','icon-user','icon-more'],
+          icon_color: 'darkgreen'
+        }
+    },
+    methods:{
+      add(){
+        this.$store.commit('increment')
+      },
+      dec(){
+        this.$store.commit('decrement')
+      }
+    }
+}
+
+</script>
+
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+    @import url('assets/css/reset.css');
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
